@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 import java.util.List;
 
 // PUBLIC_INTERFACE
@@ -30,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.OnNo
 
         noteRepository = NotesApp.getRepository(this);
 
+        // Adapter with note click *and* long click support
         notesAdapter = new NotesAdapter(noteRepository.getAllNotes(), this);
 
         RecyclerView recyclerView = findViewById(R.id.notes_list);
@@ -52,6 +56,36 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.OnNo
                 return true;
             }
         });
+
+        // Handle note details navigation on long click (optional UX)
+        recyclerView.addOnItemTouchListener(new NoteItemLongClickListener(this, recyclerView, new NoteItemLongClickListener.OnItemLongClickListener() {
+            @Override
+            public void onItemLongClick(View view, int position) {
+                Note longPressedNote = noteRepository.getAllNotes().get(position);
+                Intent intent = new Intent(MainActivity.this, NoteDetailsActivity.class);
+                intent.putExtra("note", longPressedNote);
+                startActivity(intent);
+            }
+        }));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
+            return true;
+        } else if (id == R.id.action_about) {
+            startActivity(new Intent(this, AboutActivity.class));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void startNewNote() {

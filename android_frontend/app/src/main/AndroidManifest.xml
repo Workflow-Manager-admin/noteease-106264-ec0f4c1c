@@ -9,6 +9,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Notes.Light">
 
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".AboutActivity" />
+        <activity android:name=".NoteDetailsActivity" />
         <activity android:name=".NoteEditorActivity" />
 
         <activity android:name=".MainActivity"
