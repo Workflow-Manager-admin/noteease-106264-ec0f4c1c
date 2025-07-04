@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">NoteEase</string>
+    <string name="add_note">Add Note</string>
+    <string name="edit_note">Edit Note</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="note_title_hint">Title</string>
+    <string name="note_content_hint">Note</string>
+    <string name="empty_note">Note is empty!</string>
+</resources>
